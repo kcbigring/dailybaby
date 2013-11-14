@@ -12,7 +12,7 @@ set :application, 'dailybaby'
 # RVM bootstrap
 require 'rvm/capistrano'
 set :rvm_ruby_string, '1.9.3@dailybaby'              # use the same ruby as used locally for deployment
-# set :rvm_autolibs_flag, "enable"       # more info: rvm help autolibs
+set :rvm_autolibs_flag, "enable"       # more info: rvm help autolibs
 set :rvm_install_with_sudo, true
 set :rvm_type, :system
 before 'deploy:setup', 'rvm:install_rvm'   # install RVM
