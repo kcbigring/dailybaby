@@ -1,0 +1,2 @@
+class MobilePhone < Phone
+end

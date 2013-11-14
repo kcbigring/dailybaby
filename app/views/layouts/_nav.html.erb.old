@@ -1,0 +1,18 @@
+<%= nav_bar :fixed => :top, :brand => "Daily Baby" do %>
+    <% menu_group do %>
+        <%= menu_item "Home", root_path %>
+    <% end %>
+    <% if current_user %>
+    	Signed in as <%= current_user.email %>. Not you?
+        <%= menu_item "Log Out", log_out_path %>
+    <% else %>
+        <% menu_group :pull => :right do %>
+            <%= menu_item "Sign Up", new_user_registration_path %>
+            <% form_for :user do |f| -%>
+              <p><%= f.text_field :email %></p>
+              <p><%= f.password_field :password %></p>
+              <p><%= f.submit "Sign in" %></p>
+            <% end -%>
+        <% end %>
+    <% end %>
+<% end %>

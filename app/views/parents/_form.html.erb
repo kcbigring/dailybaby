@@ -1,0 +1,58 @@
+<%= form_for @parent, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email, :class => 'text_field' %>
+    </div>
+  </div>
+  
+  <div class="control-group">
+	  Children:
+	  <ul>
+	    <%= f.fields_for :kids do |kids_form| %>
+	      <li>
+	      	<%= kids_form.hidden_field :type_setter, :value => 'Kid' %>
+	      	
+	        <%= kids_form.label :name %>
+	        <%= kids_form.text_field :name %>
+	 
+	        <%= kids_form.label :birthdate %>
+	        <%= kids_form.date_field :birthdate %>
+	        
+	        <%= kids_form.label :sex %>
+	        <%= kids_form.text_field :sex %>
+	        
+	       	<% if kids_form.object.id %>
+	        	<%= link_to 'Show', kid_path(kids_form.object) %>
+	        <% end %>
+	      </li>
+	    <% end %>
+	  </ul>
+  </div>
+  
+  <div class="control-group">
+	  Email Recipients:
+	  <ul>
+	    <%= f.fields_for :deliveries do |deliveries_form| %>
+	      <li>
+	      	<%= deliveries_form.hidden_field :type_setter, :value => 'Delivery' %>
+	      	
+	        <%= deliveries_form.label :email %>
+	        <%= deliveries_form.text_field :email %>
+	      </li>
+	    <% end %>
+	  </ul>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                parents_path, :class => 'btn' %>
+  </div>
+<% end %>

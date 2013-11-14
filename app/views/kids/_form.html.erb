@@ -1,0 +1,20 @@
+<%= simple_form_for @kid, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :name %>
+  <%= f.input :birthdate %>
+  <%= f.input :sex %>
+    <div class="control-group">
+	  Album:
+	  <ul>
+	    <%= f.fields_for :album do |album_form| %>
+	    	<%= album_form.input :smugmug_id %>	        
+	        <%= album_form.input :custom_url %>
+	        <%= album_form.input :password %>
+	    <% end %>
+	  <ul>
+  	</div>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                parents_path, :class => 'btn' %>
+  </div>
+<% end %>

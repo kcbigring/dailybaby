@@ -1,0 +1,13 @@
+<%= simple_form_for @album, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :smugmug_id %>
+  <%= f.input :key %>
+  <%= f.input :nice_name %>
+  <%= f.input :title %>
+  <%= f.input :url %>
+  <%= f.input :kid_id %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                albums_path, :class => 'btn' %>
+  </div>
+<% end %>
