@@ -3,9 +3,9 @@ set :default_stage, "production"
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
 
-# set :whenever_command, "bundle exec whenever"
-# set :whenever_environment, defer { stage }
-# require 'whenever/capistrano'
+set :whenever_command, "bundle exec whenever"
+set :whenever_environment, defer { stage }
+require 'whenever/capistrano'
 
 set :application, 'dailybaby'
 
