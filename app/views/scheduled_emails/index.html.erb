@@ -1,0 +1,25 @@
+<%- model_class = ScheduledEmail -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+
+<%= will_paginate @scheduled_emails %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Parent</th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%= model_class.human_attribute_name(:delivered) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @scheduled_emails.each do |scheduled_email| %>
+      <tr>
+        <td><%= scheduled_email.parent.name %></td>
+        <td><%= scheduled_email.created_at %></td>
+        <td><%= scheduled_email.delivered %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

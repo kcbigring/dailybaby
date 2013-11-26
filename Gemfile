@@ -30,3 +30,4 @@ gem 'cancan' # need to add abilities here
 gem 'smirk'
 gem 'time_diff'
 gem 'whenever', :require => false
+gem 'will_paginate'
