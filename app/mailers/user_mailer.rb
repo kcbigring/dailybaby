@@ -20,6 +20,9 @@ class UserMailer < ActionMailer::Base
     subject += ("#{time_diff[:month]} month ") if time_diff[:month] == 1
     subject += ("#{time_diff[:month]} months ") if time_diff[:month] > 1
     
+    subject += ("#{time_diff[:week]} week") if time_diff[:week] == 1
+    subject += ("#{time_diff[:week]} weeks") if time_diff[:week] > 1
+    
     subject += ("#{time_diff[:day]} day") if time_diff[:day] == 1
     subject += ("#{time_diff[:day]} days") if time_diff[:day] > 1
     
