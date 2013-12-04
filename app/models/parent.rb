@@ -8,7 +8,9 @@ class Parent < User
 
   def deliver(kid, image_url, caption)
     self.deliveries.each do |delivery|
-      UserMailer.daily_mail(delivery, self, kid, image_url, caption).deliver
+      puts "sending email to #{delivery.email} id=#{delivery.id}"
+      ret = UserMailer.daily_mail(delivery, self, kid, image_url, caption).deliver
+      puts ret.inspect
     end
   end
   

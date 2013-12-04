@@ -1,6 +1,6 @@
-# require "net/https"
-# require "uri"
-# require 'rest_client'
+require "net/https"
+require "uri"
+require 'rest_client'
 
 class SmugMug
   attr_accessor :smug
@@ -9,6 +9,29 @@ class SmugMug
   
   def initialize
     # @smug = Smirk::Client.new("rana@thedailybaby.com", "gheissari")
+  end
+  
+  def get_urls(image_id, image_key, password)
+    params = { 
+      :method => "smugmug.login.withPassword", 
+      :APIKey => '6o6SLvwiAs6MAsCGMQ4VoeKzggC7Whap', 
+      :EmailAddress => 'rana@thedailybaby.com', 
+      :Password => 'gheissari'
+    }
+    session_id = get(params, true)['Login']['Session']['id']
+#     
+    # params = { 
+      # :method => "smugmug.images.getURLs", 
+      # :SessionID => session_id, 
+      # :ImageID => image_id, 
+      # :ImageKey => image_key
+    # }
+    params[:SessionID] = session_id
+    params[:method] = "smugmug.images.getURLs"
+    params[:ImageID] = image_id
+    params[:ImageKey] = image_key
+    params[:Password] = password
+    puts get(params, true)
   end
   
   def put_resource(album_id, filename, content, caption)

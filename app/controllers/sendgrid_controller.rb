@@ -14,7 +14,9 @@ class SendgridController < ApplicationController
         params['attachments'].to_i.times do |i|
           Rails.logger.debug ">>>> Filename #{params["attachment#{i+1}"].original_filename}"
           stream = params["attachment#{i+1}"]
-          caption = params['text'].strip
+          subject = params['subject'].to_s.strip
+          caption = params['text'].to_s.strip
+          caption = "#{subject}: #{caption}" if subject.length > 0
           parent.upload(params["attachment#{i+1}"].original_filename, stream.read, caption)
         end
       end

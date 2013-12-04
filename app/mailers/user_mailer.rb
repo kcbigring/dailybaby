@@ -1,4 +1,5 @@
-require 'net/http'
+require 'uri'
+require 'open-uri'
 
 class UserMailer < ActionMailer::Base
   default from: "rob@thedailybaby.com"
@@ -8,7 +9,7 @@ class UserMailer < ActionMailer::Base
     @parent = parent
     @kid = kid
     @caption = caption
-    attachments[get_image_name(image_url)] = Net::HTTP.get_response(image_url).body
+    attachments[get_image_name(image_url)] = open(URI(image_url)).read if image_url rescue nil
     time_diff = Time.diff(DateTime.now, kid.birthdate)
 
     subject = kid.name

@@ -11,9 +11,9 @@
 ActionMailer::Base.smtp_settings = {
   :address              => "smtp.sendgrid.net",
   :port                 => 587,
-  :domain               => "birdbox.com",
-  :user_name            => "birdbox",
-  :password             => "b1rdB0x",
+  :domain               => "thedailybaby.com",
+  :user_name            => "robdelwo",
+  :password             => "sgtdb22413",
   :authentication       => "plain",
   :enable_starttls_auto => true
 }

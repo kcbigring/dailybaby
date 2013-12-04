@@ -23,7 +23,7 @@ class SmugMugWrapper
     @client.albums
   end
   
-  def get_image_url(image_id, image_key)
+  def get_image_url(image_id, image_key, password=nil)
     @client.find_image(image_id, image_key).originalurl
   end
   
