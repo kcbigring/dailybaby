@@ -16,7 +16,7 @@
   <tbody>
     <% @scheduled_emails.each do |scheduled_email| %>
       <tr>
-        <td><%= scheduled_email.parent.name %></td>
+        <td><%= scheduled_email.parent ? scheduled_email.parent.name : 'unknown parent' %></td>
         <td><%= scheduled_email.created_at %></td>
         <td><%= scheduled_email.delivered %></td>
       </tr>
