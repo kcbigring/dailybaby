@@ -24,13 +24,14 @@ group :production do
 end
 
 group :test, :development do
-  gem 'proxylocal'
-  gem "rails-erd"
-  gem 'quiet_assets'
-  gem 'sqlite3'
   gem 'capistrano'
-  gem 'rvm-capistrano'
+  gem 'faker'
+  gem 'proxylocal'
   gem 'pry'
+  gem 'quiet_assets'
+  gem 'rails-erd'
+  gem 'rvm-capistrano'
+  gem 'sqlite3'
 end
 
 group :doc do

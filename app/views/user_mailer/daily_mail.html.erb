@@ -1,9 +1,25 @@
-<% if @caption %>	
-	<p><%= @caption %></p>
-<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Daily Baby</title>
+  </head>
+  <body>
+    <% if @caption.present? %>
+      <p><%= @caption %></p>
+    <% end %>
 
-<p>If you'd like to see past pictures visit: <%= @kid.album.custom_url %></p>
+    <% if @medium_url.present? %>
+      <p>
+        <%= image_tag @medium_url %>
+      </p>
+    <% end %>
 
-<p>
-password: <%= @kid.album.password %>
-</p>
+    <p>
+      If you'd like to see past pictures visit: <%= @kid.album.custom_url %>
+    </p>
+
+    <p>
+      password: <%= @kid.album.password %>
+    </p>
+  </body>
+</html>
