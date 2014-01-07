@@ -2,7 +2,7 @@ require 'uri'
 require 'open-uri'
 
 class UserMailer < ActionMailer::Base
-  default from: "pictures@thedailybaby.com"
+  default from: "The Daily Baby <pictures@thedailybaby.com>"
 
   def daily_mail(user, parent, kid, image_url, caption)
     @user = user
