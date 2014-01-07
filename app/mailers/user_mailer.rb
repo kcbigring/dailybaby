@@ -9,7 +9,23 @@ class UserMailer < ActionMailer::Base
     @parent = parent
     @kid = kid
     @caption = caption
-    attachments[get_image_name(image_url)] = open(URI(image_url)).read if image_url rescue nil
+
+    if image_url.present?
+      @medium_url  = image_url[ :medium ]
+      original_url = image_url[ :original ]
+
+      attachments[ get_image_name( original_url ) ] =
+        begin
+          # use block form to automatically close IO handles
+          open URI( original_url ) do | io |
+            io.read
+          end
+        rescue
+          nil
+        end
+    else
+      @medium_url = ''
+    end
 
     mail \
       :subject => subject_for( kid ),

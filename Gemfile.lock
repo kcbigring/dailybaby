@@ -57,6 +57,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
+    faker (1.2.0)
+      i18n (~> 0.5)
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.9)
@@ -187,6 +189,7 @@ DEPENDENCIES
   cancan
   capistrano
   devise
+  faker
   jquery-rails
   less-rails
   mail
