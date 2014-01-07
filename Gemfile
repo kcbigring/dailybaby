@@ -4,6 +4,7 @@ gem 'rails', '4.0.2'
 
 gem 'cancan' # need to add abilities here
 gem 'devise'
+gem 'fattr'
 gem 'jquery-rails'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'mail'

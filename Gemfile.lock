@@ -59,6 +59,7 @@ GEM
     execjs (2.0.2)
     faker (1.2.0)
       i18n (~> 0.5)
+    fattr (2.2.1)
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.9)
@@ -190,6 +191,7 @@ DEPENDENCIES
   capistrano
   devise
   faker
+  fattr
   jquery-rails
   less-rails
   mail
