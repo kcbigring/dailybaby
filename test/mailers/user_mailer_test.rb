@@ -39,10 +39,11 @@ class UserMailerTest < ActionMailer::TestCase
         :custom_url => 'https://google.com',
         :password   => 'password'
 
+    # March 1st birthday
     kid =
       Kid.new \
         :album     => album,
-        :birthdate => DateTime.parse( '03/01/2013' ).to_date,
+        :birthdate => DateTime.parse( '01/03/2013' ).to_date,
         :name      => 'Sean'
 
     image_url =

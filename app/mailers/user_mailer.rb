@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
 
   def subject_for( kid )
     subject = kid.name
-    time_diff = Time.diff(DateTime.now, kid.birthdate)
+    time_diff = TimeDiff.compute(DateTime.now, kid.birthdate)
 
     DailyMailSubject.compile \
       kid.name,
