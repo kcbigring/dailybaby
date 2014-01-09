@@ -39,7 +39,7 @@ class Parent < User
   end
 
   def send_upload_sms_reminder
-    user_sms_notifier_klass.new.upload_reminder( self ).deliver
+    user_sms_notifier_klass.new.upload_reminder self
   end
 
   def upload(filename, content, caption)

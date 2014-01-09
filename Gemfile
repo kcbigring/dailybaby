@@ -27,6 +27,7 @@ end
 group :test, :development do
   gem 'capistrano'
   gem 'database_cleaner'
+  gem 'dotenv-rails'
   gem 'faker'
   gem 'proxylocal'
   gem 'pry'

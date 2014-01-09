@@ -55,6 +55,9 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    dotenv (0.9.0)
+    dotenv-rails (0.9.0)
+      dotenv (= 0.9.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -195,6 +198,7 @@ DEPENDENCIES
   capistrano
   database_cleaner
   devise
+  dotenv-rails
   faker
   fattr
   jquery-rails
