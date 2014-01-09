@@ -13,7 +13,29 @@ class Parent < User
       puts ret.inspect
     end
   end
-  
+
+  def send_upload_email_reminder
+    UserMailer.upload_reminder( self ).deliver
+  end
+
+  def send_upload_reminder
+    case reminder_delivery_preference
+    when 1
+      send_upload_email_reminder
+    when 2
+      send_upload_sms_reminder
+    when 3
+      send_upload_email_reminder
+      send_upload_sms_reminder
+    else
+      # do nothing
+    end
+  end
+
+  def send_upload_sms_reminder
+    UserSmsNotifier.new.upload_reminder( self ).deliver
+  end
+
   def upload(filename, content, caption)
     aws_store = AwsStore.new('dailybaby-email')
     smug_mug = SmugMug.new
@@ -29,5 +51,4 @@ class Parent < User
       ScheduledEmail.create email_hash
     end
   end
-  
 end

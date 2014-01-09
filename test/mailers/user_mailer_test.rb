@@ -1,30 +1,48 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-  test 'successfully delivers daily mail' do
-    mailer = daily_email
-
-    before_count = ActionMailer::Base.deliveries.size
-    mailer.deliver
-    after_count = ActionMailer::Base.deliveries.size
-
-    assert_operator \
-      after_count,
-      :>,
-      before_count
-  end
-
-  test 'attaches image to email' do
+  test 'attaches image to daily email' do
     mailer = daily_email
     refute_empty mailer.attachments
   end
 
-  test 'places image in html email' do
+  test 'places image in daily html email' do
     mailer = daily_email
 
     assert_match \
       /#{ medium_url }/i,
       mailer.html_part.body.to_s
+  end
+
+  test 'upload reminder uses default language if no kids' do
+    p =
+      Parent.new \
+        :email => Faker::Internet.email
+
+    mailer = upload_reminder_email p
+
+    assert_match \
+      /your child/i,
+      mailer.subject
+  end
+
+  test 'upload reminder uses child name in subject if present' do
+    mailer = upload_reminder_email
+
+    assert_match \
+      /#{ default_parent.kids.first.name }/i,
+      mailer.subject
+  end
+
+  test 'upload reminder reply to is gallery.thedailybaby.com address' do
+    mailer = upload_reminder_email
+
+    matches =
+      mailer.reply_to.select do | address |
+        address.to_s =~ /gallery\.thedailybaby\.com/i
+      end
+
+    assert_not_empty matches
   end
 
   private
@@ -64,6 +82,22 @@ class UserMailerTest < ActionMailer::TestCase
     email
   end
 
+  def default_parent
+    return @_default_parent if @_default_parent.present?
+
+    p =
+      Parent.new \
+        :email => Faker::Internet.email
+
+    k =
+      Kid.new \
+        :name => Faker::Name.first_name
+
+    p.kids << k
+
+    @_default_parent = p
+  end
+
   def klass
     UserMailer
   end
@@ -82,5 +116,9 @@ class UserMailerTest < ActionMailer::TestCase
           # end
         end
       end
+  end
+
+  def upload_reminder_email( parent = default_parent )
+    klass.upload_reminder parent
   end
 end
