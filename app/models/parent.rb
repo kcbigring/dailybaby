@@ -1,4 +1,10 @@
 class Parent < User
+  Fattr( :default_user_mailer_klass ){ UserMailer }
+  fattr( :user_mailer_klass ){ self.class.default_user_mailer_klass }
+
+  Fattr( :default_user_sms_notifier_klass ){ UserSmsNotifier }
+  fattr( :user_sms_notifier_klass ){ self.class.default_user_sms_notifier_klass }
+
   has_many :recipients, :foreign_key => "user_id"
   has_many :deliveries, :through => :recipients, :source => :delivery
   has_many :children, :foreign_key => "user_id"
@@ -9,13 +15,13 @@ class Parent < User
   def deliver(kid, image_url, caption)
     self.deliveries.each do |delivery|
       puts "sending email to #{delivery.email} id=#{delivery.id}"
-      ret = UserMailer.daily_mail(delivery, self, kid, image_url, caption).deliver
+      ret = user_mailer_klass.daily_mail(delivery, self, kid, image_url, caption).deliver
       puts ret.inspect
     end
   end
 
   def send_upload_email_reminder
-    UserMailer.upload_reminder( self ).deliver
+    user_mailer_klass.upload_reminder( self ).deliver
   end
 
   def send_upload_reminder
@@ -33,7 +39,7 @@ class Parent < User
   end
 
   def send_upload_sms_reminder
-    UserSmsNotifier.new.upload_reminder( self ).deliver
+    user_sms_notifier_klass.new.upload_reminder( self ).deliver
   end
 
   def upload(filename, content, caption)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140108185053) do
+ActiveRecord::Schema.define(version: 20140109191547) do
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -100,9 +100,10 @@ ActiveRecord::Schema.define(version: 20140108185053) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "cell_phone"
-    t.integer  "reminder_delivery_preference"
+    t.integer  "reminder_delivery_preference", default: 0
   end
 
+  add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
