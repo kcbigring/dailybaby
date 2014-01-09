@@ -36,6 +36,17 @@ class ParentRemindersTest < ActiveSupport::TestCase
       @p
   end
 
+  test 'fetches parent to remind even if no parents have already submitted photo' do
+    ScheduledEmail.destroy_all
+    @p.destroy
+
+    parents = @r.parents_without_scheduled_email
+
+    assert_includes \
+      parents,
+      @p2
+  end
+
   private
 
   def klass

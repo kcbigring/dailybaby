@@ -13,10 +13,19 @@ class ParentReminders
   end
 
   def parents_without_scheduled_email
-    @_parents_without_scheduled_email ||=
-      Parent.where \
-        'id NOT IN (:parent_ids)',
-        :parent_ids => parent_ids_with_scheduled_email
+    return @_parents_without_scheduled_email if @_parents_without_scheduled_email.present?
+
+    query_args =
+      if !parent_ids_with_scheduled_email.empty?
+        [
+          'id NOT IN (:parent_ids)',
+          :parent_ids => parent_ids_with_scheduled_email
+        ]
+      else
+        [ 'id NOT IN ()' ]
+      end
+
+    @_parents_without_scheduled_email ||= Parent.where *query_args
   end
 
   def send!
