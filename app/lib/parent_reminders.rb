@@ -1,6 +1,6 @@
 class ParentReminders
-  def self.send
-    new.send!
+  def self.deliver
+    new.deliver!
   end
 
   def parent_ids_with_scheduled_email
@@ -28,7 +28,7 @@ class ParentReminders
     @_parents_without_scheduled_email ||= Parent.where *query_args
   end
 
-  def send!
+  def deliver!
     parents_without_scheduled_email.each do | parent |
       result =
         begin
