@@ -27,6 +27,16 @@ class UserMailer < ActionMailer::Base
       :to      => user.email.to_s
   end
 
+  def upload_reminder( parent )
+    kid_name =   parent.kids.map( &:name ).detect &:present?
+    kid_name ||= 'Your Child'
+
+    mail \
+      :subject  => "Don't Forget to Send Us a Photo of #{ kid_name }!",
+      :reply_to => 'The Daily Baby <upload@gallery.thedailybaby.com>',
+      :to       => parent.email.to_s
+  end
+
   private
 
   def attach_file_at( url_or_path )

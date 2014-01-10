@@ -1,6 +1,5 @@
 namespace :dailybaby do
-  
-  desc "deliver emails"
+  desc 'deliver emails'
   task :deliver => :environment do
     puts 'sending daily emails...'
     ScheduledEmail.where(:delivered => false).each do |email|
@@ -30,5 +29,9 @@ namespace :dailybaby do
       email.save
     end
   end
-  
+
+  desc 'send reminders'
+  task :send_reminders => :environment do
+    ParentReminders.send
+  end
 end
