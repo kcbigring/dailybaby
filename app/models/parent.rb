@@ -43,7 +43,6 @@ class Parent < User
   end
 
   def upload(filename, content, caption)
-    aws_store = AwsStore.new('dailybaby-email')
     smug_mug = SmugMug.new
     self.kids.each do |kid|
       ret = smug_mug.put_resource(kid.album.smugmug_id, filename, content, caption) if kid.album.smugmug_id
