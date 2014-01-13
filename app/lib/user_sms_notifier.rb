@@ -14,7 +14,7 @@ class UserSmsNotifier
   private
 
   def body_for( parent )
-    "Don't forget to send a picture of #{ kid_name_for parent } to #{ upload_email }"
+    "Hi #{ parent.name },\n\nThis is your Daily Baby reminder!\n\n#{ upload_email }"
   end
 
   def client

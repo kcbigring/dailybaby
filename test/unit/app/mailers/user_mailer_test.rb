@@ -23,7 +23,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_match \
       /your child/i,
-      mailer.subject
+      mailer.text_part.body.to_s
   end
 
   test 'upload reminder uses child name in subject if present' do
@@ -31,7 +31,7 @@ class UserMailerTest < ActionMailer::TestCase
 
     assert_match \
       /#{ default_parent.kids.first.name }/i,
-      mailer.subject
+      mailer.text_part.body.to_s
   end
 
   test 'upload reminder reply to is gallery.thedailybaby.com address' do
