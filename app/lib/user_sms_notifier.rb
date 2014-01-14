@@ -14,7 +14,7 @@ class UserSmsNotifier
   private
 
   def body_for( parent )
-    "Hi #{ parent.name },\n\nThis is your Daily Baby reminder!\n\n#{ upload_email }"
+    "This is your Daily Baby reminder!\n\n#{ upload_email }"
   end
 
   def client
