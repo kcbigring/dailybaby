@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-  test 'attaches image to daily email' do
+  test 'no attachments in daily email' do
     mailer = daily_email
-    refute_empty mailer.attachments
+    assert_empty mailer.attachments
   end
 
   test 'places image in daily html email' do
@@ -12,18 +12,6 @@ class UserMailerTest < ActionMailer::TestCase
     assert_match \
       /#{ medium_url }/i,
       mailer.html_part.body.to_s
-  end
-
-  test 'upload reminder uses default language if no kids' do
-    p =
-      Parent.new \
-        :email => Faker::Internet.email
-
-    mailer = upload_reminder_email p
-
-    assert_match \
-      /your child/i,
-      mailer.text_part.body.to_s
   end
 
   test 'upload reminder uses child name in subject if present' do
@@ -93,6 +81,13 @@ class UserMailerTest < ActionMailer::TestCase
       Kid.new \
         :name => Faker::Name.first_name
 
+    a =
+      Album.new \
+        :custom_url => 'http://thedailybaby.com',
+        :kid        => k,
+        :password   => 'password'
+
+    k.album = a
     p.kids << k
 
     @_default_parent = p

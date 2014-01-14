@@ -16,8 +16,7 @@ class UserMailer < ActionMailer::Base
     @caption = caption
 
     if image_url.present?
-      @medium_url  = image_url[ :medium ]
-      attach_file_at image_url[ :original ]
+      @medium_url = image_url
     else
       @medium_url = ''
     end
@@ -30,9 +29,15 @@ class UserMailer < ActionMailer::Base
   def upload_reminder( parent )
     @parent_name = parent.name
 
-    kid_name  =   parent.kids.map( &:name ).detect &:present?
-    kid_name  ||= 'your child'
-    @kid_name =   kid_name
+    kid =
+      parent.kids.detect do | kid |
+        kid.name.present?
+      end
+
+    raise unless kid.present?
+
+    @gallery_url = kid.album.custom_url
+    @kid_name    = kid.name
 
     mail \
       :subject  => "Hello. This is your Daily Baby Reminder.",
@@ -41,18 +46,6 @@ class UserMailer < ActionMailer::Base
   end
 
   private
-
-  def attach_file_at( url_or_path )
-    attachments[ get_image_name( url_or_path ) ] =
-      begin
-        # use block form to automatically close IO handles
-        kernel_klass.open URI( url_or_path ) do | io |
-          io.read
-        end
-      rescue
-        nil
-      end
-  end
 
   def get_image_name(image_url)
     splits = image_url.split('/')
