@@ -29,9 +29,15 @@ class UserMailer < ActionMailer::Base
   def upload_reminder( parent )
     @parent_name = parent.name
 
-    kid_name  =   parent.kids.map( &:name ).detect &:present?
-    kid_name  ||= 'your child'
-    @kid_name =   kid_name
+    kid =
+      parent.kids.detect do | kid |
+        kid.name.present?
+      end
+
+    raise unless kid.present?
+
+    @gallery_url = kid.album.custom_url
+    @kid_name    = kid.name
 
     mail \
       :subject  => "Hello. This is your Daily Baby Reminder.",
