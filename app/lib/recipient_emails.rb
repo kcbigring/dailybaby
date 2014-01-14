@@ -8,12 +8,7 @@ class RecipientEmails
   end
 
   def image_data_for( email )
-    image = smug_mug_image_for email
-
-    {
-      :medium   => image.mediumurl,
-      :original => image.originalurl
-    }
+    smug_mug_image_for( email ).mediumurl
   rescue
     nil
   end

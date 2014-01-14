@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-  test 'attaches image to daily email' do
+  test 'no attachments in daily email' do
     mailer = daily_email
-    refute_empty mailer.attachments
+    assert_empty mailer.attachments
   end
 
   test 'places image in daily html email' do
