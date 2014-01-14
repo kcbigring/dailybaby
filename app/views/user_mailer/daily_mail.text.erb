@@ -1,0 +1,9 @@
+<% if @caption %>
+  <%= @caption %>
+<% end %>
+
+If you'd like to see past pictures visit:
+
+<%= @kid.album.custom_url %>
+
+Password: <%= @kid.album.password %>

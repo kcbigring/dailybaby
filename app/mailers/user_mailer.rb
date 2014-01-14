@@ -2,37 +2,62 @@ require 'uri'
 require 'open-uri'
 
 class UserMailer < ActionMailer::Base
-  default from: "pictures@thedailybaby.com"
-  
-  def daily_mail(user, parent, kid, image_url, caption)
+  Fattr( :default_kernel_klass ){ Kernel }
+  fattr( :kernel_klass ){ self.class.default_kernel_klass }
+
+  default from: "The Daily Baby <pictures@thedailybaby.com>"
+
+  def daily_mail(user, parent, kid, image_url, caption, provided_kernel_klass = Kernel)
+    self.kernel_klass = ( provided_kernel_klass or kernel_klass )
+
     @user = user
     @parent = parent
     @kid = kid
     @caption = caption
-    attachments[get_image_name(image_url)] = open(URI(image_url)).read if image_url rescue nil
-    time_diff = Time.diff(DateTime.now, kid.birthdate)
 
-    subject = kid.name
-    subject += " at "
-    subject += ("#{time_diff[:year]} year ") if time_diff[:year] == 1
-    subject += ("#{time_diff[:year]} years ") if time_diff[:year] > 1
-    
-    subject += ("#{time_diff[:month]} month ") if time_diff[:month] == 1
-    subject += ("#{time_diff[:month]} months ") if time_diff[:month] > 1
-    
-    subject += ("#{time_diff[:week]} week") if time_diff[:week] == 1
-    subject += ("#{time_diff[:week]} weeks") if time_diff[:week] > 1
-    
-    subject += ("#{time_diff[:day]} day") if time_diff[:day] == 1
-    subject += ("#{time_diff[:day]} days") if time_diff[:day] > 1
-    
-    mail(:to => "#{user.email}", :subject => subject)
+    if image_url.present?
+      @medium_url = image_url
+    else
+      @medium_url = ''
+    end
+
+    mail \
+      :subject => subject_for( kid ),
+      :to      => user.email.to_s
   end
-  
+
+  def upload_reminder( parent )
+    @parent_name = parent.name
+
+    kid =
+      parent.kids.detect do | kid |
+        kid.name.present?
+      end
+
+    raise unless kid.present?
+
+    @gallery_url = kid.album.custom_url
+    @kid_name    = kid.name
+
+    mail \
+      :subject  => "Hello. This is your Daily Baby Reminder.",
+      :reply_to => 'The Daily Baby <upload@gallery.thedailybaby.com>',
+      :to       => parent.email.to_s
+  end
+
   private
-  
+
   def get_image_name(image_url)
     splits = image_url.split('/')
     splits[splits.length - 1]
+  end
+
+  def subject_for( kid )
+    subject = kid.name
+    time_diff = TimeDiff.compute(DateTime.now, kid.birthdate)
+
+    DailyMailSubject.compile \
+      kid.name,
+      time_diff
   end
 end

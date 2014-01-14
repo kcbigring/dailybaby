@@ -18,3 +18,7 @@
 # Ignore fs files and db config
 /config/database.yml
 .DS_Store
+
+# Ignore ENV
+/config/deploy/*.env
+/.env

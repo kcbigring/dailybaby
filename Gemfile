@@ -4,6 +4,8 @@ gem 'rails', '4.0.2'
 
 gem 'cancan' # need to add abilities here
 gem 'devise'
+gem 'dotenv-rails'
+gem 'fattr'
 gem 'jquery-rails'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'mail'
@@ -12,8 +14,8 @@ gem 's3'
 gem 'simple_form'
 gem 'smirk'
 gem 'therubyracer'
-gem 'time_diff'
 gem 'turbolinks'
+gem 'twilio-ruby'
 gem 'twitter-bootstrap-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'whenever', :require => false
@@ -24,13 +26,15 @@ group :production do
 end
 
 group :test, :development do
-  gem 'proxylocal'
-  gem "rails-erd"
-  gem 'quiet_assets'
-  gem 'sqlite3'
   gem 'capistrano'
-  gem 'rvm-capistrano'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'proxylocal'
   gem 'pry'
+  gem 'quiet_assets'
+  gem 'rails-erd'
+  gem 'rvm-capistrano'
+  gem 'sqlite3'
 end
 
 group :doc do

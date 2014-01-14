@@ -11,6 +11,38 @@
       <%= f.text_field :email, :class => 'text_field' %>
     </div>
   </div>
+  <div class="control-group">
+    <%= f.label :cell_phone, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :cell_phone, :class => 'text_field' %>
+      <span class="help-inline">
+        Must be of the format +12345678900. Country code at the front, and no symbols other than leading +.
+      </span>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :reminder_delivery_preference, :class => 'control-label' %>
+    <div class="controls">
+      <%
+        options =
+          [
+            [ 'None'        , 0 ],
+            [ 'Email Only'  , 1 ],
+            [ 'SMS Only'    , 2 ],
+            [ 'Email & SMS' , 3 ]
+          ]
+
+        selected =
+          ( f.object.reminder_delivery_preference or 0 )
+      %>
+      <%=
+        f.select \
+          :reminder_delivery_preference,
+          options_for_select( options , selected ),
+          :class => 'text_field'
+      %>
+    </div>
+  </div>
   
   <div class="control-group">
 	  Children:

@@ -18,5 +18,17 @@ ActionMailer::Base.smtp_settings = {
   :enable_starttls_auto => true
 }
 
-ActionMailer::Base.default_url_options[:host] = "localhost:3000"
-Mail.register_interceptor(DevelopmentMailInterceptor) if Rails.env.development?
+ActionMailer::Base.default_url_options[:host] =
+  case Rails.env
+  when 'production'
+    'thedailybaby.com'
+  else
+    'localhost:3000'
+  end
+
+if Rails.env.development?
+  DEVELOPMENT_EMAIL =
+    ( ENV[ 'DEVELOPMENT_EMAIL' ] or 'dev@thedailybaby.local' )
+
+  Mail.register_interceptor(DevelopmentMailInterceptor)
+end
