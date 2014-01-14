@@ -20,4 +20,5 @@
 .DS_Store
 
 # Ignore ENV
+/config/deploy/*.env
 /.env

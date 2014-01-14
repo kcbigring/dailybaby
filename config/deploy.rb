@@ -1,3 +1,5 @@
+require 'dotenv/capistrano'
+
 set :stages, %w(production staging)
 set :default_stage, "production"
 require 'capistrano/ext/multistage'
@@ -54,13 +56,16 @@ namespace :deploy do
   task :link_db do
     run "ln -s #{shared_path}/config/database.yml #{latest_release}/config/database.yml"
   end
-  
 end
 
 namespace :rvm do
   task :trust_rvmrc do
     run "rvm rvmrc trust #{release_path}"
   end
+end
+
+task :ping do
+  run 'whoami'
 end
 
 before 'deploy:assets:precompile', 'deploy:link_db'

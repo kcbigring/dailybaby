@@ -4,6 +4,7 @@ gem 'rails', '4.0.2'
 
 gem 'cancan' # need to add abilities here
 gem 'devise'
+gem 'dotenv-rails'
 gem 'fattr'
 gem 'jquery-rails'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
@@ -27,7 +28,6 @@ end
 group :test, :development do
   gem 'capistrano'
   gem 'database_cleaner'
-  gem 'dotenv-rails'
   gem 'faker'
   gem 'proxylocal'
   gem 'pry'
