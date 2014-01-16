@@ -1,4 +1,10 @@
 class Parent < User
+  REMINDER_DELIVERY_PREFERENCES =
+    Map.new \
+      :email_only    => 1,
+      :sms_only      => 2,
+      :email_and_sms => 3
+
   Fattr( :default_user_mailer_klass ){ UserMailer }
   fattr( :user_mailer_klass ){ self.class.default_user_mailer_klass }
 
@@ -26,11 +32,11 @@ class Parent < User
 
   def send_upload_reminder
     case reminder_delivery_preference
-    when 1
+    when REMINDER_DELIVERY_PREFERENCES.email_only
       send_upload_email_reminder
-    when 2
+    when REMINDER_DELIVERY_PREFERENCES.sms_only
       send_upload_sms_reminder
-    when 3
+    when REMINDER_DELIVERY_PREFERENCES.email_and_sms
       send_upload_email_reminder
       send_upload_sms_reminder
     else

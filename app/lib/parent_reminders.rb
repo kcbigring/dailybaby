@@ -12,30 +12,30 @@ class ParentReminders
       ).map &:parent_id
   end
 
+  def parents_who_prefer_reminders
+    Parent.where \
+      'reminder_delivery_preference IN ( :active_preferences )',
+      :active_preferences => Parent::REMINDER_DELIVERY_PREFERENCES.values
+  end
+
   def parents_without_scheduled_email
-    return @_parents_without_scheduled_email if @_parents_without_scheduled_email.present?
-
-    query_args =
-      if !parent_ids_with_scheduled_email.empty?
-        [
-          'id NOT IN (:parent_ids)',
+    @_parents_without_scheduled_email ||=
+      if parent_ids_with_scheduled_email.any?
+        parents_who_prefer_reminders.where \
+          'id NOT IN ( :parent_ids )',
           :parent_ids => parent_ids_with_scheduled_email
-        ]
       else
-        [ 'id NOT IN ()' ]
+        parents_who_prefer_reminders
       end
-
-    @_parents_without_scheduled_email ||= Parent.where *query_args
   end
 
   def deliver!
     parents_without_scheduled_email.each do | parent |
-      result =
-        begin
-          parent.send_upload_reminder
-        rescue
-          false
-        end
+      begin
+        parent.send_upload_reminder
+      rescue
+        false
+      end
     end
   end
 end

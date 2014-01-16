@@ -2,8 +2,13 @@ require 'test_helper'
 
 class ParentRemindersTest < ActiveSupport::TestCase
   def setup
-    @p  = Parent.create!
-    @p2 = Parent.create!
+    @p =
+      Parent.create! \
+        :reminder_delivery_preference => Parent::REMINDER_DELIVERY_PREFERENCES.email_only
+
+    @p2 =
+      Parent.create! \
+        :reminder_delivery_preference => Parent::REMINDER_DELIVERY_PREFERENCES.sms_only
 
     ScheduledEmail.create \
       :delivered => false,
