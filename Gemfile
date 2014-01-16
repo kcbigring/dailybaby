@@ -9,6 +9,7 @@ gem 'fattr'
 gem 'jquery-rails'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'mail'
+gem 'map'
 gem 'rest-client'
 gem 's3'
 gem 'simple_form'
