@@ -10,12 +10,32 @@ class TimeDiffTest < ActiveSupport::TestCase
   [
     [
       '06/01/2014', # January 6th
+      '06/12/2013', # December 6th
+      {
+        :year  => 0,
+        :month => 1,
+        :week  => 0,
+        :day   => 0
+      }
+    ],
+    [
+      '23/01/2014', # January 22nd
+      '16/01/2014', # January 16th
+      {
+        :year  => 0,
+        :month => 0,
+        :week  => 1,
+        :day   => 0
+      }
+    ],
+    [
+      '06/01/2014', # January 6th
       '31/01/2012', # January 31st
       {
         :year  => 1,
         :month => 11,
-        :week  => 1,
-        :day   => 0
+        :week  => 0,
+        :day   => 6
       }
     ],
     [
@@ -25,7 +45,17 @@ class TimeDiffTest < ActiveSupport::TestCase
         :year  => 0,
         :month => 10,
         :week  => 2,
-        :day   => 2
+        :day   => 1
+      }
+    ],
+    [
+      '24/02/2014', # February 24th
+      '24/02/2013', # February 24th
+      {
+        :year  => 1,
+        :month => 0,
+        :week  => 0,
+        :day   => 0
       }
     ],
     [
@@ -34,8 +64,8 @@ class TimeDiffTest < ActiveSupport::TestCase
       {
         :year  => 0,
         :month => 10,
-        :week  => 2,
-        :day   => 0
+        :week  => 1,
+        :day   => 6
       }
     ],
     [
@@ -44,12 +74,12 @@ class TimeDiffTest < ActiveSupport::TestCase
       {
         :year  => 0,
         :month => 7,
-        :week  => 4,
-        :day   => 0
+        :week  => 3,
+        :day   => 6
       }
     ]
   ].each do | example |
-    test "expected returns #{ example[ 1 ] }" do
+    test "diff end:#{ example[ 0 ] } start:#{ example[ 1 ] }" do
       check_date = Date.parse example[ 0 ]
       birth_date = Date.parse example[ 1 ]
       expected   = example[ 2 ]
