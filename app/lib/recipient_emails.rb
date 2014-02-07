@@ -15,9 +15,9 @@ class RecipientEmails
 
   def deliver!
     emails.each do |email|
-      parent = Parent.find(email.parent_id)
+      parent = Parent.find_by_id(email.parent_id)
       if parent
-        kid = Kid.find(email.kid_id)
+        kid = Kid.find_by_id(email.kid_id)
         if kid
           image_data = image_data_for email
 
