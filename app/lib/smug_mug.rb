@@ -53,7 +53,7 @@ class SmugMug
           'X-Smug-SessionID'  => session_id,
           'X-Smug-Version' => '1.2.2',
           'X-Smug-FileName' => filename,
-          'X-Smug-Caption' => caption,
+          'X-Smug-Caption' => strip_newlines( caption ),
           'X-Smug-ResponseType' => 'JSON'
         }
       )
@@ -95,5 +95,8 @@ class SmugMug
     proto = ssl ? "https://" : "http://"
     JSON.parse(RestClient.post(proto+HOST, params).body)
   end
-  
+
+  def strip_newlines( str )
+    str.gsub( /\r|\n/ , '' )
+  end
 end
